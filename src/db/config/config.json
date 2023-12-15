@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "postgres",
+    "host": "DB",
+    "dialect": "postgres",
+    "migrationStorage": "json"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "postgres",
+    "host": "DB",
+    "dialect": "postgres",
+    "migrationStorage": "json"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "postgres",
+    "host": "DB",
+    "dialect": "postgres",
+    "migrationStorage": "json"
+  }
+}

@@ -1,0 +1,47 @@
+version: "3.8"
+
+services: 
+  app:
+    container_name: app
+    build:
+     context: .
+    env_file:
+      - .env
+    volumes: 
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 5000:5000
+    command: 
+       sh -c "npm run migrate &&
+              npm run seed && 
+              npm run start:dev"
+    depends_on:
+      DB:
+        condition: service_healthy
+        restart: true
+  DB:
+    container_name: DB
+    image: postgres:15.0-alpine
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      start_period: 40s
+      start_interval: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      PG_DATA: /var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  pgdata:
